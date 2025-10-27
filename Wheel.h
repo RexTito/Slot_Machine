@@ -1,0 +1,8 @@
+//
+// Created by titom on 10/27/2025.
+//
+
+#ifndef SLOT_MACHINE_WHEEL_H
+#define SLOT_MACHINE_WHEEL_H
+
+#endif //SLOT_MACHINE_WHEEL_H
