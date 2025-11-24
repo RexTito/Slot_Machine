@@ -1,96 +1,136 @@
-//
-// Created by titom on 10/27/2025.
-//
 #include <iostream>
 #include <random>
-#include "Symbol.h"
+#include <vector>
+#include <string>
+
+// This returns the art for symbol based on the roll
+std::vector<std::string> getSymbol(int roll) {
+    if (roll <= 30) {
+        return {
+            " _______________ ",
+            "|    _______    |",
+            "|   |       |   |",
+            "|   |       |   |",
+            "| __|       |__ |",
+            "||             ||",
+            "||_____________||",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 55) {
+        return {
+            " _______________ ",
+            "|   0   0    0  |",
+            "|  |\\  /-\\  /|  |",
+            "|  | \\/   \\/ |  |",
+            "|  |         |  |",
+            "|  |         |  |",
+            "|  |_________|  |",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 70) {
+        return {
+            " _______________ ",
+            "|      ___      |",
+            "|     /   \\     |",
+            "|    /     \\    |",
+            "|   |   $   |   |",
+            "|    \\     /    |",
+            "|     \\___/     |",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 80) {
+        return {
+            " _______________ ",
+            "|   _________   |",
+            "|  |_____   /   |",
+            "|       /  /    |",
+            "|      /  /     |",
+            "|     /  /      |",
+            "|    /__/       |",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 86) {
+        return {
+            " _______________ ",
+            "|     ____      |",
+            "|    /    \\     |",
+            "|    |    /     |",
+            "|        /      |",
+            "|       |       |",
+            "|       0       |",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 92) {
+        return {
+            " _______________ ",
+            "|        _      |",
+            "|       /|      |",
+            "|    __/ |__    |",
+            "|   /  \\ /  \\   |",
+            "|  |    |    |  |",
+            "|   \\__/ \\__/   |",
+            "|_______________|"
+        };
+    }
+    else if (roll <= 97) {
+        return {
+            " _______________ ",
+            "|    __  __     |",
+            "|   /  \\/  \\    |",
+            "|   \\      /    |",
+            "|    \\    /     |",
+            "|     \\  /      |",
+            "|      \\/       |",
+            "|_______________|"
+        };
+    }
+    else {
+        return {
+            " _______________ ",
+            "|    _______    |",
+            "|   /       \\   |",
+            "|   \\       /   |",
+            "|    \\     /    |",
+            "|     \\   /     |",
+            "|      \\_/      |",
+            "|_______________|"
+        };
+    }
+}
 
 int main() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(1, 100);
-    int roll = dist(gen);
-    std::cout << roll << std::endl;
 
-    if (roll <= 30) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|    ______     |" << std::endl;
-        std::cout << "|   |       |   |" << std::endl;
-        std::cout << "|   |       |   |" << std::endl;
-        std::cout << "| __|       |__ |" << std::endl;
-        std::cout << "||             ||" << std::endl;
-        std::cout << "||_____________||" << std::endl;
-        std::cout << "|_______________|" << std::endl;
+    // This prints a 3x3 grid of our symbols
+    std::vector<std::vector<std::vector<std::string>>> grid(3, std::vector<std::vector<std::string>>(3));
+
+    // This generates all the rolls we need and it gets the symbols assigned to the value
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 3; ++c) {
+            int roll = dist(gen);
+            grid[r][c] = getSymbol(roll);
+        }
     }
-    else if (roll <= 55 and roll > 30) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|   0   0    0  |" << std::endl;
-        std::cout << "|  |\\  /-\\  /|  |" << std::endl;
-        std::cout << "|  | \\/   \\/ |  |" << std::endl;
-        std::cout << "|  |         |  |" << std::endl;
-        std::cout << "|  |         |  |" << std::endl;
-        std::cout << "|  |_________|  |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else if (roll <= 70 and roll > 55) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|      ___      |" << std::endl;
-        std::cout << "|     /   \\     |" << std::endl;
-        std::cout << "|    /     \\    |" << std::endl;
-        std::cout << "|   |   $   |   |" << std::endl;
-        std::cout << "|    \\     /    |" << std::endl;
-        std::cout << "|     \\___/     |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else if (roll <= 80 and roll > 70) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|   _________   |" << std::endl;
-        std::cout << "|  |_____   /   |" << std::endl;
-        std::cout << "|       /  /    |" << std::endl;
-        std::cout << "|      /  /     |" << std::endl;
-        std::cout << "|     /  /      |" << std::endl;
-        std::cout << "|    /__/       |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else if (roll <= 86 and roll > 80) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|     ____      |" << std::endl;
-        std::cout << "|    /    \\     |" << std::endl;
-        std::cout << "|    |    /     |" << std::endl;
-        std::cout << "|        /      |" << std::endl;
-        std::cout << "|       |       |" << std::endl;
-        std::cout << "|       0       |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else if (roll <= 92 and roll > 86) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|        _      |" << std::endl;
-        std::cout << "|       /|      |" << std::endl;
-        std::cout << "|    __/ |__    |" << std::endl;
-        std::cout << "|   /  \\ /  \\   |" << std::endl;
-        std::cout << "|  |    |    |  |" << std::endl;
-        std::cout << "|   \\__/ \\__/   |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else if (roll <= 97 and roll > 92) {
-        std::cout << " _______________" << std::endl;
-        std::cout << "|    __  __     |" << std::endl;
-        std::cout << "|   /  \\/  \\    |" << std::endl;
-        std::cout << "|   \\      /    |" << std::endl;
-        std::cout << "|    \\    /     |" << std::endl;
-        std::cout << "|     \\  /      |" << std::endl;
-        std::cout << "|      \\/       |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
-    }
-    else{
-        std::cout << " _______________" << std::endl;
-        std::cout << "|    _______    |" << std::endl;
-        std::cout << "|   /       \\   |" << std::endl;
-        std::cout << "|   \\       /   |" << std::endl;
-        std::cout << "|    \\     /    |" << std::endl;
-        std::cout << "|     \\   /     |" << std::endl;
-        std::cout << "|      \\_/      |" << std::endl;
-        std::cout << "|_______________|" << std::endl;
+
+    // Each symbol is 8 lines tall
+    const int SYMBOL_HEIGHT = 8;
+
+    // This prints the grid of symbols by doing it row by row, with the symbols side by side
+     for (int row = 0; row < 3; row++) {
+        for (int line = 0; line < SYMBOL_HEIGHT; line++) {
+            std::cout
+                << grid[row][0][line] << "   "
+                << grid[row][1][line] << "   "
+                << grid[row][2][line] << std::endl;
+        }
+        std::cout << std::endl;
     }
 
     return 0;
