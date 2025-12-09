@@ -5,4 +5,7 @@
 #ifndef SLOT_MACHINE_SYMBOL_H
 #define SLOT_MACHINE_SYMBOL_H
 
+
+
+
 #endif //SLOT_MACHINE_SYMBOL_H
