@@ -3,3 +3,7 @@
 //
 
 #include "Coin.h"
+
+Coin::Coin() : m_cents(25) {}
+Coin::Coin(long cents) : m_cents(cents) {}
+long Coin::value() const { return m_cents; }
