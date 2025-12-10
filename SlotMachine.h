@@ -15,7 +15,7 @@ private:
     std::vector<Symbol> m_symbols;   // repository of symbol objects (probabilities + multipliers)
     std::vector<Wheel> m_wheels;     // one wheel per column (3 wheels)
     int m_bank;                      // number of coins the player has
-
+    double Multiplier(const std::string& name) const;
     void initSymbols();              // populate m_symbols in proper cumulative-probability order
 
 public:
@@ -30,7 +30,6 @@ public:
 
     // Payout helper: returns winnings for the middle row (based on bet)
     int evaluateMiddleRowWinnings(const std::vector<std::string>& grid, int bet) const;
-    void printPayTable() const;
-};
+    void printPayTable() const;};
 
 #endif //SLOT_MACHINE_SLOTMACHINE_H

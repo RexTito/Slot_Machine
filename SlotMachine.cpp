@@ -31,6 +31,15 @@ void SlotMachine::initSymbols() {
 
 int SlotMachine::currentBalance() const { return m_bank; }
 void SlotMachine::insertCoins(int count) { m_bank += count; }
+double SlotMachine::Multiplier(const std::string &name) const {
+    auto it = std::find_if(m_symbols.begin(), m_symbols.end(),
+        [&name](const Symbol& s){ return s.name() == name; });
+    if (it == m_symbols.end()) {
+        return 0.0;
+    }
+    return it->multiplier();
+}
+
 
 std::vector<std::string> SlotMachine::spin(int bet) {
     if (bet <= 0) {
@@ -45,14 +54,14 @@ std::vector<std::string> SlotMachine::spin(int bet) {
     m_bank -= bet;
 
     // 3 columns x 3 rows (we assume m_wheels.size() columns)
-    int cols = (int)m_wheels.size();
+    int cols = static_cast<int>(m_wheels.size());
     int rows = 3;
     std::vector<std::string> grid(rows * cols);
 
     // For each column (wheel), spin 3 times for top/mid/bottom
-    for (int col = 0; col < cols; ++col) {
-        for (int row = 0; row < rows; ++row) {
-            const Symbol &s = m_wheels[col].spin();
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            const Symbol& s = m_wheels[col].spin();
             grid[row * cols + col] = s.name();
         }
     }
@@ -61,23 +70,30 @@ std::vector<std::string> SlotMachine::spin(int bet) {
 
 int SlotMachine::evaluateMiddleRowWinnings(const std::vector<std::string>& grid, int bet) const {
     // grid is row-major: row0col0 row0col1 row0col2 | row1col0 row1col1 row1col2 | row2col0 ...
-    if (grid.size() < 6) return 0;
+    if (grid.size() < 9) return 0;
     std::string left = grid[1 * 3 + 0];
     std::string mid  = grid[1 * 3 + 1];
     std::string right= grid[1 * 3 + 2];
+    double m1 = Multiplier(left);
+    double m2 = Multiplier(mid);
+    double m3 = Multiplier(right);
+    std::cout << "Multiplier = " << m1 << ", " << m2 << ", " << m3 << "\n";
+    double combined = m1 * m2 * m3;
+    int winngins =static_cast<int>(std::floor(bet * combined + 0.000001));
+    //{
+        //if (left == mid && mid == right) {
+            // find symbol multiplier
+            //auto it = std::find_if(m_symbols.begin(), m_symbols.end(),
+                //[&](const Symbol& s){ return s.name() == mid; });
+            //if (it != m_symbols.end()) {
+               // double mult = it->multiplier();
+                // winnings are bet * multiplier (rounded down to int)
+               // int winnings = static_cast<int>(std::floor(bet * mult + 0.000001));
+                //return winnings;
+            //
+        //}
 
-    if (left == mid && mid == right) {
-        // find symbol multiplier
-        auto it = std::find_if(m_symbols.begin(), m_symbols.end(),
-            [&](const Symbol& s){ return s.name() == mid; });
-        if (it != m_symbols.end()) {
-            double mult = it->multiplier();
-            // winnings are bet * multiplier (rounded down to int)
-            int winnings = static_cast<int>(std::floor(bet * mult + 0.000001));
-            return winnings;
-        }
-    }
-    return 0;
+    return winngins;
 }
 void SlotMachine::printPayTable() const {
     std::cout << "\nPAYOUT TABLE\n";
