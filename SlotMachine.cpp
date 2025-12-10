@@ -56,7 +56,6 @@ std::vector<std::string> SlotMachine::spin(int bet) {
             grid[row * cols + col] = s.name();
         }
     }
-
     return grid;
 }
 
@@ -79,4 +78,12 @@ int SlotMachine::evaluateMiddleRowWinnings(const std::vector<std::string>& grid,
         }
     }
     return 0;
+}
+void SlotMachine::printPayTable() const {
+    std::cout << "\nPAYOUT TABLE\n";
+    std::cout << "-----------------------------------\n";
+    for (const auto& s : m_symbols) {
+        std::cout << s.name() << " : x" << s.multiplier() << '\n';
+    }
+    std::cout << "-----------------------------------\n\n";
 }

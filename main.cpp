@@ -35,35 +35,55 @@ void printGrid(const std::vector<std::string>& grid) {
 
 
 int main() {
-    SlotMachine machine(3, 25);  // 3 wheels, 10 starting credits
+    SlotMachine machine(3, 25);  // 3 wheels, 25 starting credits
 
 
     std::cout << "Simple Slot Machine\n";
     std::cout << "Starting balance: "
               << machine.currentBalance() << " credits.\n";
+    machine.printPayTable();
 
     char again = 'y';
     while (again == 'y' || again == 'Y') {
+        if (machine.currentBalance() <= 0) {
+            char add;
+            std::cout << "You are out of credits. Add more? (y/n) ";
+            std::cin >> add;
+            if (add == 'y' || add == 'Y') {
+                int more;
+                std::cout << "How many credits would you like to add? ";
+                std::cin >> more;
+                machine.insertCoins(more);
+                std::cout << "New balance is: "
+                          << machine.currentBalance() << " credits.\n";
+            } else {
+                std::cout << "Game over.\n";
+                std::cout << "Thanks for playing!\n";
+                return 0;
+            }
+        }
         int bet;
         std::cout << "Place your bet (current balance "
                   << machine.currentBalance() << "): ";
         std::cin >> bet;
-
-        machine.spin(bet);
         auto grid = machine.spin(bet);
-        if (grid.empty()) continue;
-        printGrid(grid);
-
-
-        if (machine.currentBalance() <= 0) {
-            std::cout << "You are out of credits. Game over.\n";
-            break;
+        if (grid.empty()) {
+            continue;
         }
-
-        std::cout << "Spin again? (y/n): ";
-        std::cin >> again;
+        printGrid(grid);
+        int winnings = machine.evaluateMiddleRowWinnings(grid,bet);
+        if (winnings > 0) {
+            machine.insertCoins(winnings);
+            std::cout<<"You bet "<< bet << " credits and Won "
+                     << winnings << " credits!.\n";
+        } else {
+            std::cout << "You bet "<< bet << " credits but lost.\n";
+        }
+        std::cout << "New balance: "
+                  << machine.currentBalance() << " credits.\n";
+    std::cout << "Spin again? (y/n): ";
+    std::cin >> again;
     }
-
     std::cout << "Thanks for playing!\n";
     return 0;
 }

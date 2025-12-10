@@ -30,6 +30,7 @@ public:
 
     // Payout helper: returns winnings for the middle row (based on bet)
     int evaluateMiddleRowWinnings(const std::vector<std::string>& grid, int bet) const;
+    void printPayTable() const;
 };
 
 #endif //SLOT_MACHINE_SLOTMACHINE_H
